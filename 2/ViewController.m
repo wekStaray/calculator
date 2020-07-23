@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import <UIKit/UIKit.h>
-
+#import <Masonry/Masonry.h>
 @interface ViewController ()
 
 -(void)Calculation;
@@ -106,6 +106,22 @@
         else [self Calculation];
     
     self.isInEqualCalculator = YES;
+}
+-(void)pointCalc:(UIButton*)it{
+   // if(self.isInEqualCalculator) [self allClear:it];
+    
+    double num = [self.text.text doubleValue];
+    
+    double tmp = num - (long long)num;
+    static unichar ch = (unichar)'.';
+    
+    if(![self isZero:tmp]) return;
+    else if(ch == [self.text.text characterAtIndex:self.text.text.length-1])
+        self.text.text = [self.text.text substringToIndex:(self.text.text.length-1)];
+    else
+        self.text.text = [NSString stringWithFormat:@"%@.",self.text.text];
+    
+    self.secondNumber=self.text.text;
 }
 -(void)addCalc:(UIButton*)it{
     self.C = 1;
@@ -218,9 +234,12 @@
     if(self.text.text.length == 12) return;
     
     NSString* str = [it titleForState:UIControlStateNormal];
-    long long temp = [self.text.text longLongValue];
-    temp = temp * 10;
-    self.text.text = [NSString stringWithFormat:@"%lld",temp+[str longLongValue]];
+    
+    if([self.text.text isEqualToString:@"0"])
+        self.text.text = str;
+    else
+        self.text.text = [NSString stringWithFormat:@"%@%@",self.text.text,str];
+    
     self.secondNumber=self.text.text;
     //NSLog(@"%@",self.text.text);
 }
@@ -272,7 +291,7 @@
     
     int x=15,y=225,w=75,h=75;
     int cntx=0,cnty=0;
-    NSString *temp = @"C741^<8520 963 /*-+=\0";
+    NSString *temp = @"C741^<8520 963./*-+=\0";
     
     for(int i = 0 ; i < 20 ; i++)
     {
@@ -316,15 +335,13 @@
                 [btn addTarget:self action:@selector(backSpace:) forControlEvents:UIControlEventTouchUpInside];
                 break;
             case 10:{
-                [btn setTitle:@"C" forState:UIControlStateNormal];
-                [btn setTitle:@"C" forState:UIControlStateHighlighted];
-                [btn addTarget:self action:@selector(clear:) forControlEvents:UIControlEventTouchUpInside];
+                    [btn setTitle:@"√" forState:UIControlStateNormal];
+                    [btn setTitle:@"√" forState:UIControlStateHighlighted];
+                    [btn addTarget:self action:@selector(sqrtCalc:) forControlEvents:UIControlEventTouchUpInside];
             }
                 break;
             case 14:{
-                [btn setTitle:@"√" forState:UIControlStateNormal];
-                [btn setTitle:@"√" forState:UIControlStateHighlighted];
-                [btn addTarget:self action:@selector(sqrtCalc:) forControlEvents:UIControlEventTouchUpInside];
+                [btn addTarget:self action:@selector(pointCalc:) forControlEvents:UIControlEventTouchUpInside];
             }
                 break;
             case 15:

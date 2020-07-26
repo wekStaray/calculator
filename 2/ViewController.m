@@ -15,7 +15,7 @@
 -(void)clear:(UIButton*)it;
 
 @property(nonatomic,strong) UILabel *text;
-@property(nonatomic,strong) NSString *ans;
+@property(nonatomic,strong) NSString *firstNumber;
 @property(nonatomic,strong) NSString *secondNumber;
 
 @property(nonatomic,assign) BOOL isAfterCalculate;
@@ -31,7 +31,7 @@
 -(void)Calculation{
     if(self.isAfterCalculate) return;
     double tmp = 0.0;
-    double num1 = [self.ans doubleValue];
+    double num1 = [self.firstNumber doubleValue];
     double num2 = [self.secondNumber doubleValue];
     static long long inf = 100000000000000;
     switch (self.C){
@@ -41,7 +41,7 @@
                 if(tmp >= inf){
                     self.text.text=@"Too big";
                     self.secondNumber = @"0";
-                    self.ans = nil;
+                    self.firstNumber = nil;
                     self.isAfterCalculate = NO;
                     return;
                 }
@@ -53,7 +53,7 @@
                 if(tmp <= -inf){
                     self.text.text=@"Too small";
                     self.secondNumber = @"0";
-                    self.ans = nil;
+                    self.firstNumber = nil;
                     self.isAfterCalculate = NO;
                     return;
                 }
@@ -65,7 +65,7 @@
                 if(tmp >= inf){
                     self.text.text=@"Too big";
                     self.secondNumber = @"0";
-                    self.ans = nil;
+                    self.firstNumber = nil;
                     self.isAfterCalculate = NO;
                     return;
                 }
@@ -75,7 +75,7 @@
                     if([self isZero:num2]){
                     self.text.text=@"ERROR";
                     self.secondNumber = @"0";
-                    self.ans = nil;
+                    self.firstNumber = nil;
                     self.isAfterCalculate = NO;
                     return;
                 }
@@ -89,7 +89,7 @@
                     if(tmp >= inf){
                         self.text.text=@"Too big";
                         self.secondNumber = @"0";
-                        self.ans = nil;
+                        self.firstNumber = nil;
                         self.isAfterCalculate = NO;
                         return;
                     }
@@ -98,11 +98,11 @@
     }
     double num3 = tmp - (long long)tmp;
     
-    self.ans = self.text.text = [self isZero:num3]?[NSString stringWithFormat:@"%.0lf",tmp]:[NSString stringWithFormat:@"%lf",tmp];
+    self.firstNumber = self.text.text = [self isZero:num3]?[NSString stringWithFormat:@"%.0lf",tmp]:[NSString stringWithFormat:@"%lf",tmp];
 
 }
 -(void)equal:(UIButton*)it{
-    if(self.ans == nil) return;
+    if(self.firstNumber == nil) return;
         else [self Calculation];
     
     self.isInEqualCalculator = YES;
@@ -127,15 +127,15 @@
     self.C = 1;
     
     if(self.isInEqualCalculator){
-        self.ans = self.text.text;
+      //  self.firstNumber = self.text.text;
         self.isInEqualCalculator = NO;
         self.isAfterCalculate = YES;
     }
     
      if(self.isAfterCalculate) return;
      
-     if(self.ans != nil ) [self Calculation];
-     else self.ans = self.text.text;
+     if(self.firstNumber != nil ) [self Calculation];
+     //else self.firstNumber = self.text.text;
     
      self.isAfterCalculate = YES;
 }
@@ -143,15 +143,15 @@
     self.C = 2;
      
      if(self.isInEqualCalculator){
-         self.ans = self.text.text;
+       //  self.firstNumber = self.text.text;
          self.isInEqualCalculator = NO;
          self.isAfterCalculate = YES;
      }
      
       if(self.isAfterCalculate) return;
       
-      if(self.ans != nil ) [self Calculation];
-       else self.ans = self.text.text;
+      if(self.firstNumber != nil ) [self Calculation];
+       //else self.firstNumber = self.text.text;
       
        self.isAfterCalculate = YES;
 }
@@ -159,7 +159,7 @@
    self.C = 3;
     
     if(self.isInEqualCalculator){
-        self.ans = self.text.text;
+       // self.firstNumber = self.text.text;
         self.isInEqualCalculator = NO;
         self.isAfterCalculate = YES;
     }
@@ -168,22 +168,22 @@
      
      self.isAfterCalculate = YES;
      
-     if(self.ans != nil ) [self Calculation];
-        else self.ans = self.text.text;
+     if(self.firstNumber != nil ) [self Calculation];
+       // else self.firstNumber = self.text.text;
 }
 -(void)divideCalc:(UIButton*)it{
    self.C = 4;
     
     if(self.isInEqualCalculator){
-        self.ans = self.text.text;
+  //      self.firstNumber = self.text.text;
         self.isInEqualCalculator = NO;
         self.isAfterCalculate = YES;
     }
     
      if(self.isAfterCalculate) return;
      
-     if(self.ans != nil ) [self Calculation];
-      else self.ans = self.text.text;
+     if(self.firstNumber != nil ) [self Calculation];
+   //   else self.firstNumber = self.text.text;
      
       self.isAfterCalculate = YES;
 }
@@ -191,25 +191,25 @@
     self.C = 5;
      
     if(self.isInEqualCalculator){
-        self.ans = self.text.text;
+        //self.firstNumber = self.text.text;
         self.isInEqualCalculator = NO;
         self.isAfterCalculate = YES;
     }
     
      if(self.isAfterCalculate) return;
      
-     if(self.ans != nil ) [self Calculation];
-      else self.ans = self.text.text;
+     if(self.firstNumber != nil ) [self Calculation];
+    //  else self.firstNumber = self.text.text;
      
       self.isAfterCalculate = YES;
 }
 -(void)sqrtCalc:(UIButton*)it{
-    if(self.ans == nil || self.isAfterCalculate ||self.isInEqualCalculator){
+    if(self.firstNumber == nil || self.isAfterCalculate ||self.isInEqualCalculator){
         double num = [self.text.text doubleValue];
         num = sqrt(num);
         double num3 = num - (long long)num;
         self.secondNumber = @"0";
-        self.ans = self.text.text = [self isZero:num3]?[NSString stringWithFormat:@"%.0lf",num]:[NSString stringWithFormat:@"%lf",num];
+        self.firstNumber = self.text.text = [self isZero:num3]?[NSString stringWithFormat:@"%.0lf",num]:[NSString stringWithFormat:@"%lf",num];
     }
     else{
         double num = [self.secondNumber doubleValue];
@@ -218,14 +218,15 @@
             
         [self Calculation];
     }
-    //self.ans = nil;
+    //self.firstNumber = nil;
     self.isAfterCalculate = NO;
     self.isInEqualCalculator = YES;
 }
 -(void)addnum:(UIButton*)it{
     
     if(self.isAfterCalculate){
-        [self clear:it];
+        self.firstNumber = self.text.text;
+        self.secondNumber = self.text.text = @"0";
         self.isAfterCalculate = NO;
     }
     
@@ -247,14 +248,14 @@
 -(void)backSpace:(UIButton*)it{
     if(self.isInEqualCalculator) return;
     if(self.text.text.length == 0) return;
-    else if(self.text.text.length == 1) self.text.text=@"0";
+    else if(self.text.text.length == 1) self.secondNumber = self.text.text=@"0";
     else
-    self.text.text = [self.text.text substringToIndex:(self.text.text.length-1)];
+        self.secondNumber = self.text.text = [self.text.text substringToIndex:(self.text.text.length-1)];
 }
 
 -(void)allClear:(UIButton*)it{
     self.secondNumber=self.text.text=@"0";
-    self.ans = nil;
+    self.firstNumber = nil;
     self.isAfterCalculate = NO;
     self.isInEqualCalculator = NO;
 }
@@ -271,89 +272,143 @@
     // Do any additional setup after loading the view.
    // self.view.backgroundColor = [UIColor purpleColor];
     
+    CGFloat padding = 10.0;
+    UIView *answerView = [UIView new];
+    UIView *calcView = [UIView new];
+    [self.view addSubview:answerView];
+    [self.view addSubview:calcView];
     
-    UIView * nv= [[UIView alloc] initWithFrame:CGRectMake(15,30,345,175)];
-    nv.layer.backgroundColor=[[[UIColor blackColor]colorWithAlphaComponent:0.01] CGColor];
-    nv.layer.cornerRadius = 5;
+    answerView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.05];
+    answerView.layer.borderWidth = 2;
+    answerView.layer.cornerRadius = 30;
+    [answerView.layer setBorderColor: [[UIColor clearColor]CGColor]];
+   // calcView.backgroundColor = [UIColor greenColor];
     
-    self.text = [ [UILabel alloc]initWithFrame:CGRectMake(15,30,345,175)];
+    [answerView mas_makeConstraints:^(MASConstraintMaker *make){
+        make.top.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(padding, padding, 0, padding));
+        make.bottom.equalTo(calcView.mas_top).offset(-10);
+    }];
     
-    [self.view addSubview: nv];
-    [nv addSubview:self.text];
+    [calcView mas_makeConstraints:^(MASConstraintMaker *make){
+        make.bottom.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, padding, padding, padding));
+        make.height.equalTo(answerView).multipliedBy(2);
+    }];
     
-    
+    self.text = [UILabel new];
+    [answerView addSubview:self.text];
     self.text.text = @"0" ;
+    [self.text mas_makeConstraints:^(MASConstraintMaker *make){
+        make.left.equalTo(answerView).offset(30);
+        make.centerY.equalTo(answerView);
+        make.height.equalTo(answerView);
+    }];
+    
+    
     
     self.text.textColor = [UIColor blackColor];
     self.text.font = [UIFont systemFontOfSize:40];
     //text.backgroundColor = [UIColor redColor];
     //[self.text sizeToFit];
     
-    int x=15,y=225,w=75,h=75;
-    int cntx=0,cnty=0;
-    NSString *temp = @"C741^<8520 963./*-+=\0";
+    int x,y;
+    NSString *temp = @" <√/789*456-123+^0.=\0";
+    UIView *lastLineView,*lastView;
     
-    for(int i = 0 ; i < 20 ; i++)
+    UIView *firstView = [UIView new];
+    UIButton *firstBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [calcView addSubview:firstView];
+    [firstView addSubview:firstBtn];
+    firstView.layer.borderWidth = 2;
+    firstView.layer.cornerRadius = 20;
+    [firstView.layer setMasksToBounds:YES];
+    firstView.layer.backgroundColor = [[[UIColor blackColor]colorWithAlphaComponent:0.3] CGColor];
+    [firstBtn setTitle:[temp substringWithRange:NSMakeRange(0, 1)] forState:UIControlStateNormal];
+    [firstBtn setTitle:[temp substringWithRange:NSMakeRange(0, 1)] forState:UIControlStateHighlighted];
+    firstBtn.titleLabel.font = [UIFont systemFontOfSize:25];
+    firstBtn.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.1];
+    [firstBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [firstBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    
+    [firstView mas_makeConstraints:^(MASConstraintMaker *make){
+        make.top.left.equalTo(calcView).offset(10);
+        make.height.width.lessThanOrEqualTo(calcView);
+    }];
+    
+    [firstBtn mas_makeConstraints:^(MASConstraintMaker *make){
+        make.top.left.height.width.equalTo(firstView);
+    }];
+    
+    [firstBtn setTitle:@"CE" forState:UIControlStateNormal];
+    [firstBtn setTitle:@"CE" forState:UIControlStateHighlighted];
+    [firstBtn addTarget:self action:@selector(allClear:) forControlEvents:UIControlEventTouchUpInside];
+    
+    lastLineView=lastView=firstView;
+    
+    for(int i = 1 ; i < 20 ; i++)
     {
-        UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(x+cntx*90, y+cnty*90, w, h)];
-        //UILabel * newLable = [[UILabel alloc] initWithFrame:CGRectMake(32.5, 0, w, h)];
-        UIButton* btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        btn.frame = CGRectMake(0, 0, w, h);
+        UIView *newView = [UIView new];
+       UIButton* btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [calcView addSubview:newView];
+        [newView addSubview:btn];
+        [newView.layer setMasksToBounds:YES];
         newView.layer.borderWidth = 2;
-        newView.layer.backgroundColor = [[[UIColor blackColor]colorWithAlphaComponent:0.3] CGColor];
-        //newLable.textColor = [UIColor blackColor];
-       // newLable.font = [UIFont systemFontOfSize:20];
-        //2.5 消角
         newView.layer.cornerRadius = 20;
-        //[newView.layer setMasksToBounds:YES];
-        
-        newView.backgroundColor = [UIColor whiteColor];
-        //btn.backgroundColor = [UIColor redColor];
-        //newLable.text = [temp substringWithRange:NSMakeRange(i, 1)];
+        newView.layer.backgroundColor = [[[UIColor blackColor]colorWithAlphaComponent:0.3] CGColor];
         [btn setTitle:[temp substringWithRange:NSMakeRange(i, 1)] forState:UIControlStateNormal];
         [btn setTitle:[temp substringWithRange:NSMakeRange(i, 1)] forState:UIControlStateHighlighted];
+        btn.titleLabel.font = [UIFont systemFontOfSize:25];
+        btn.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.1];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-        btn.titleLabel.font = [UIFont systemFontOfSize:20];
+        x = i/4 ; y= i%4 ;
         
-        newView.backgroundColor=[[UIColor blackColor]colorWithAlphaComponent:0.1];
-        //2.4 tag值
-        newView.tag = 101 + cntx*3 + cnty;//一般tag值在100以上比较好, 避免出现冲突
-        btn.tag = 201 + cntx*3 + cnty;
-        //C741^<8520%963 /*-+=\0
+        [newView mas_makeConstraints:^(MASConstraintMaker *make){
+            if(x==0) make.top.equalTo(calcView).offset(10);
+            else if(x==4)
+                make.bottom.equalTo(calcView).offset(-10);
+            make.top.equalTo(lastLineView.mas_bottom).offset(10);
+            
+            if(y==0) make.left.equalTo(calcView).offset(10);
+            else if(y==3)
+                make.right.equalTo(calcView).offset(-10);
+            make.left.equalTo(lastView.mas_right).offset(10);
+        
+            make.height.equalTo(firstView.mas_height);
+            make.width.equalTo(firstView.mas_width);
+        }];
+        
+        [btn mas_makeConstraints:^(MASConstraintMaker *make){
+            make.top.left.height.width.equalTo(newView);
+        }];
+        
+        //@" <√/789*456-123+^0.=\0"
+        lastView = newView;
+        if(y == 3) lastLineView = newView;
         switch (i) {
-            case 0:{
-                [btn setTitle:@"CE" forState:UIControlStateNormal];
-                [btn setTitle:@"CE" forState:UIControlStateHighlighted];
-                [btn addTarget:self action:@selector(allClear:) forControlEvents:UIControlEventTouchUpInside];
-            }
-                break;
-            case 4:
+            case 16:
                 [btn addTarget:self action:@selector(squareCalc:) forControlEvents:UIControlEventTouchUpInside];
                 break;
-            case 5:
+            case 1:
                 [btn addTarget:self action:@selector(backSpace:) forControlEvents:UIControlEventTouchUpInside];
                 break;
-            case 10:{
-                    [btn setTitle:@"√" forState:UIControlStateNormal];
-                    [btn setTitle:@"√" forState:UIControlStateHighlighted];
+            case 2:{
                     [btn addTarget:self action:@selector(sqrtCalc:) forControlEvents:UIControlEventTouchUpInside];
             }
                 break;
-            case 14:{
+            case 18:{
                 [btn addTarget:self action:@selector(pointCalc:) forControlEvents:UIControlEventTouchUpInside];
             }
                 break;
-            case 15:
+            case 3:
                 [btn addTarget:self action:@selector(divideCalc:) forControlEvents:UIControlEventTouchUpInside];
                 break;
-            case 16:
+            case 7:
                 [btn addTarget:self action:@selector(multiplyCalc:) forControlEvents:UIControlEventTouchUpInside];
                 break;
-            case 17:
+            case 11:
                 [btn addTarget:self action:@selector(minusCalc:) forControlEvents:UIControlEventTouchUpInside];
                 break;
-            case 18:
+            case 15:
                 [btn addTarget:self action:@selector(addCalc:) forControlEvents:UIControlEventTouchUpInside];
                 break;
             case 19:
@@ -363,24 +418,12 @@
         }
         
         
-        if((i>0&&i<4)||(i>5&&i<10)||(i>10&&i<14)){
+        if((i>3&&i<7)||(i>7&&i<11)||(i>11&&i<15)||(i==17)){
             [btn addTarget:self action:@selector(addnum:) forControlEvents:UIControlEventTouchUpInside];
         }
         
-        else btn.tag = 250;
-        //newLable.tag = 201 + cntx*3 + cnty;
-        //3.添加到父视图
-
-        [self.view addSubview:newView];
-        //[newView addSubview:newLable];
-        [newView addSubview:btn];
-        cnty++;
         
-        if(cnty == 5){
-            cnty=0;cntx++;
-        }
         
-        //NSLog(@"view set is ok");
     }
 }
 

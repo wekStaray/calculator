@@ -25,7 +25,7 @@
     [window makeKeyAndVisible];
     self.window = window;
     
-    NSLog(@"Window is ok");
+//    NSLog(@"Window is ok");
     
     
     

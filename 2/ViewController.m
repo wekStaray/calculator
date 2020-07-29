@@ -166,10 +166,12 @@
     
      if(self.isAfterCalculate) return;
      
-     self.isAfterCalculate = YES;
+     
      
      if(self.firstNumber != nil ) [self Calculation];
        // else self.firstNumber = self.text.text;
+    
+    self.isAfterCalculate = YES;
 }
 -(void)divideCalc:(UIButton*)it{
    self.C = 4;
@@ -295,6 +297,7 @@
     }];
     
     self.text = [UILabel new];
+    //字体调整？
     [answerView addSubview:self.text];
     self.text.text = @"0" ;
     [self.text mas_makeConstraints:^(MASConstraintMaker *make){
